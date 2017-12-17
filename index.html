@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    交易对:
+    <select id="symbol">
+        <option value="null" selected>交易对</option>
+        <option value="ethbtc">ethbtc</option>
+        <option value="eosbtc">eosbtc</option>
+        <option value="eoseth">eoseth</option>
+        <option value="iotbtc">iotbtc</option>
+        <option value="ioteth">ioteth</option>
+    </select>
+</div>
+<div id="huibi" style="display:inline-block;background-color: burlywood;">
+</div>
+<div id="cex" style="display:inline-block;background-color: rosybrown;">
+</div>
+<div id="bian" style="display:inline-block;background-color: olivedrab;">
+</div>
+<div id="bitfinex" style="display:inline-block;background-color: cornsilk;">
+</div>
+<div id="bittrex" style="display:inline-block;background-color: lavender;">
+</div>
+<div id="gate" style="display:inline-block;background-color: paleturquoise;">
+</div>
+<div id="okex" style="display:inline-block;background-color: aliceblue;">
+</div>
+<div id="zb" style="display:inline-block;background-color: mistyrose;">
+</div>
+<div>
+
+</div>
+
+
+<script src="public/js/jq.js"></script>
+<script src="public/js/app.js"></script>
+<script>
+    //提示音播放队列和已播放数量
+    playQueue = 0;
+    playedCount = 0;
+
+    function parseToDOM(str) {
+        var div = document.createElement("div");
+        if (typeof str === "string")
+            div.innerHTML = str;
+        return div.childNodes;
+    }
+
+    setInterval(timeLoop, 1000);
+
+    function timeLoop() {
+        symbol = $('#symbol').val();
+        if (symbol !== 'null') {
+            $('#huibi').load('http://api.btcexchange.com/api/huobi?type=h' + '&symbol=' + symbol);
+            $('#cex').load('http://api.btcexchange.com/api/cex?type=h' + '&symbol=' + symbol);
+            $('#bian').load('http://api.btcexchange.com/api/bian?type=h' + '&symbol=' + symbol);
+            $('#bitfinex').load('http://api.btcexchange.com/api/bitfinex?type=h' + '&symbol=' + symbol);
+            $('#bittrex').load('http://api.btcexchange.com/api/bittrex?type=h' + '&symbol=' + symbol);
+            $('#gate').load('http://api.btcexchange.com/api/gate?type=h' + '&symbol=' + symbol);
+            $('#okex').load('http://api.btcexchange.com/api/okex?type=h' + '&symbol=' + symbol);
+            $('#zb').load('http://api.btcexchange.com/api/zb?type=h' + '&symbol=' + symbol);
+        }
+    }
+
+    setInterval(checkPriceLoop, 10);
+
+    function checkPriceLoop() {
+        if (symbol !== 'null') {
+            //要遍历对比的对象数组
+            var checkList = [];
+            checkList = getCheckList();
+
+            //数组中有数据才进行检查
+            if (checkList.length > 0) {
+                checkPrice(checkList);
+            }
+        }
+        playQueue++;
+        playOgg();
+
+    }
+
+    function playOgg() {
+        if(oggPlayFlag === true){
+            return;
+        }
+        var oggSrc = '';
+        oggSrc = '"./public/ogg/Alarm_Rooster_02.ogg"';
+
+        $('embed').remove();
+        $('body').append('<embed src=' + oggSrc + ' autostart="true" hidden="true" loop="false">');
+        playedCount++;
+        playQueue = playedCount;
+    }
+
+
+</script>
+</body>
+</html>
