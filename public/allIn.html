@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+交易对:
+<select id="symbol">
+    <option value="null" selected>交易对</option>
+    <option value="ethbtc">ethbtc</option>
+    <option value="eosbtc">eosbtc</option>
+    <option value="eoseth">eoseth</option>
+    <option value="iotbtc">iotbtc</option>
+    <option value="ioteth">ioteth</option>
+</select>
+<div>
+    <div id="huobi" style="display:inline-block;background-color: burlywood;">
+        <table>
+            <tr>
+                <td colspan="4">火币</td>
+            </tr>
+            <tr>
+                <td colspan="4">时间</td>
+            </tr>
+            <!--开始放内容,第3到8格-->
+            <tr>
+
+            </tr>
+            <tr>
+
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script src="js/jq.js"></script>
+<script>
+    symbolMap = {
+        'ethbtc': {
+            'huobi': 'ethbtc'
+        }
+    };
+    symbol = $('#symbol');
+    symbol.on('change', function () {
+        huobiAjax();
+    });
+    var huobiAjax = function () {
+        if (typeof symbolMap[symbol.val()] !== 'undefined') {
+            $.get('https://api.huobi.pro/market/depth?symbol=' + symbolMap[symbol.val()].huobi + '&type=step1', function (data) {
+                var huobiObj = eval('(' + data + ')');
+                if (typeof huobiObj.tick !== 'undefined') {
+//                    console.log(huobiObj.tick);
+                    console.log(new Date().toLocaleTimeString());
+//                    console.log($('#huobi tr:nth-child(2)').html());
+                    $('#huobi tr:nth-child(2) td').html(new Date().toLocaleTimeString());
+                    var huobiShowData = [
+//                        {
+//                            'ask': 22,
+//                            'bid': 33
+//                        }
+                    ];
+                    var i=0;
+                }
+                huobiAjax();
+            })
+        }
+    };
+    var testObj = {
+        'in': 1,
+        'out': 2
+    };
+    var str = 'out';
+    console.log(testObj[str]);
+</script>
+</body>
+</html>

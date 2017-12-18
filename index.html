@@ -56,16 +56,23 @@
     function timeLoop() {
         symbol = $('#symbol').val();
         if (symbol !== 'null') {
-            $('#huibi').load('http://api.btcexchange.com/api/huobi?type=h' + '&symbol=' + symbol);
-            $('#cex').load('http://api.btcexchange.com/api/cex?type=h' + '&symbol=' + symbol);
-            $('#bian').load('http://api.btcexchange.com/api/bian?type=h' + '&symbol=' + symbol);
-            $('#bitfinex').load('http://api.btcexchange.com/api/bitfinex?type=h' + '&symbol=' + symbol);
-            $('#bittrex').load('http://api.btcexchange.com/api/bittrex?type=h' + '&symbol=' + symbol);
-            $('#gate').load('http://api.btcexchange.com/api/gate?type=h' + '&symbol=' + symbol);
-            $('#okex').load('http://api.btcexchange.com/api/okex?type=h' + '&symbol=' + symbol);
-            $('#zb').load('http://api.btcexchange.com/api/zb?type=h' + '&symbol=' + symbol);
+//            $('#huibi').load('http://api.btcexchange.com/api/huobi?type=h' + '&symbol=' + symbol);
+//            $('#cex').load('http://api.btcexchange.com/api/cex?type=h' + '&symbol=' + symbol);
+//            $('#bian').load('http://api.btcexchange.com/api/bian?type=h' + '&symbol=' + symbol);
+//            $('#bitfinex').load('http://api.btcexchange.com/api/bitfinex?type=h' + '&symbol=' + symbol);
+//            $('#bittrex').load('http://api.btcexchange.com/api/bittrex?type=h' + '&symbol=' + symbol);
+//            $('#gate').load('http://api.btcexchange.com/api/gate?type=h' + '&symbol=' + symbol);
+//            $('#okex').load('http://api.btcexchange.com/api/okex?type=h' + '&symbol=' + symbol);
+//            $('#zb').load('http://api.btcexchange.com/api/zb?type=h' + '&symbol=' + symbol);
+            function huobiAjax(){
+                $.get('http://api.btcexchange.com/api/huobi?type=h' + '&symbol=' + symbol,function (data,err) {
+                    console.log(data);
+                    huobiAjax();
+                })
+            }
         }
     }
+
 
     setInterval(checkPriceLoop, 10);
 
