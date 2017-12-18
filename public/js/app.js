@@ -84,7 +84,7 @@ function getCheckList() {
 function checkPrice(checkList) {
     var i = 0, j = 0;
     var restring = '';
-    var threshold = 0.02;
+    var threshold = 0.01;
     //TODO::阈值可输入
     while (typeof checkList[i] !== 'undefined') {
         // console.log(checkList[i]);
