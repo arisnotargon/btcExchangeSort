@@ -73,8 +73,8 @@ function getCheckList() {
         });
     }
 
-    if(checkList.length > 0){
-        console.log(checkList.length)
+    if (checkList.length > 0) {
+        // console.log(checkList.length)
     }
 
     return checkList;
@@ -82,15 +82,27 @@ function getCheckList() {
 
 //依次遍历交易所之间最低售价和最高卖价之间有没有超过最低售价3%的
 function checkPrice(checkList) {
-    var i=0,j=0;
+    var i = 0, j = 0;
     var restring = '';
-    while (typeof checkList[i] !== 'undefined'){
-        console.log(checkList[i]);
-        j=i+1;
-        while (typeof checkList[j] !== 'undefined'){
+    var threshold = 0.02;
+    //TODO::阈值可输入
+    while (typeof checkList[i] !== 'undefined') {
+        // console.log(checkList[i]);
+        j = i + 1;
+        while (typeof checkList[j] !== 'undefined') {
+            if ((checkList[i].maxBuy - checkList[j].minSell) >= (threshold * checkList[j].minSell)) {
+                restring += '<p><span style="background-color: aqua;color: black;">' + checkList[i].name + '</span>最高收购价对'
+                    + ' <span style="background-color: azure;color: brown">' + checkList[j].name + '最低出售价</span>';
+            }
+            if ((checkList[j].maxBuy - checkList[i].minSell) >= (threshold * checkList[i].minSell)) {
+                restring += '<p><span style="background-color: aqua;color: black;">' + checkList[j].name + '</span>最高收购价对'
+                    + ' <span style="background-color: azure;color: brown">' + checkList[i].name + '最低出售价</span>';
+            }
 
             j++;
         }
         i++;
     }
+    $('#alert-show').html(restring);
+    //TODO::声音提示
 }
